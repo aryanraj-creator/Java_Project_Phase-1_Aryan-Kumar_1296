@@ -1,0 +1,75 @@
+// Parent Class
+class Employee {
+    String name;
+    int id;
+    double baseSalary;
+
+    // Parameterized Constructor
+    Employee(String name, int id, double baseSalary) {
+        this.name = name;
+        this.id = id;
+        this.baseSalary = baseSalary;
+    }
+
+    // Method to calculate salary
+    double calculateSalary() {
+        return baseSalary;
+    }
+
+    // Method to display details
+    void display() {
+        System.out.println("Name: " + name);
+        System.out.println("ID: " + id);
+        System.out.println("Salary: " + calculateSalary());
+    }
+}
+
+// Full Time Employee Class
+class FullTimeEmployee extends Employee {
+    double bonus;
+
+    // Constructor
+    FullTimeEmployee(String name, int id, double baseSalary, double bonus) {
+        super(name, id, baseSalary);
+        this.bonus = bonus;
+    }
+
+    // Override method
+    double calculateSalary() {
+        return baseSalary + bonus;
+    }
+}
+
+// Part Time Employee Class
+class PartTimeEmployee extends Employee {
+    int hoursWorked;
+    double rate;
+
+    // Constructor
+    PartTimeEmployee(String name, int id, int hoursWorked, double rate) {
+        super(name, id, 0);
+        this.hoursWorked = hoursWorked;
+        this.rate = rate;
+    }
+
+    // Override method
+    double calculateSalary() {
+        return hoursWorked * rate;
+    }
+}
+
+// Main Class
+class Payroll {
+    public static void main(String args[]) {
+
+        // Creating objects
+        Employee e1 = new FullTimeEmployee("Rahul", 101, 40000, 5000);
+        Employee e2 = new PartTimeEmployee("Anita", 102, 60, 200);
+
+        System.out.println("Full Time Employee:");
+        e1.display();
+
+        System.out.println("\nPart Time Employee:");
+        e2.display();
+    }
+}
