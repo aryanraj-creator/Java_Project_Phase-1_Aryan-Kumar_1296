@@ -1,75 +1,95 @@
 // Parent Class
 class Employee {
-    String name;
-    int id;
-    double baseSalary;
+    private String name;
+    private int id;
+    private double baseSalary;
 
     // Parameterized Constructor
-    Employee(String name, int id, double baseSalary) {
+    public Employee(String name, int id, double baseSalary) {
         this.name = name;
         this.id = id;
         this.baseSalary = baseSalary;
     }
 
-    // Method to calculate salary
-    double calculateSalary() {
+    // Getters (to access private data in subclasses)
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public double getBaseSalary() {
         return baseSalary;
     }
 
-    // Method to display details
-    void display() {
+    // Method to calculate salary (to be overridden)
+    public double calculateSalary() {
+        return baseSalary;
+    }
+
+    // Method to display employee details
+    public void displayDetails() {
         System.out.println("Name: " + name);
         System.out.println("ID: " + id);
         System.out.println("Salary: " + calculateSalary());
+        System.out.println("-----------------------------");
     }
 }
 
-// Full Time Employee Class
+// Subclass: Full-Time Employee
 class FullTimeEmployee extends Employee {
-    double bonus;
+    private double bonus;
 
-    // Constructor
-    FullTimeEmployee(String name, int id, double baseSalary, double bonus) {
+    // Constructor using super()
+    public FullTimeEmployee(String name, int id, double baseSalary, double bonus) {
         super(name, id, baseSalary);
         this.bonus = bonus;
     }
 
-    // Override method
-    double calculateSalary() {
-        return baseSalary + bonus;
+    // Override calculateSalary()
+    @Override
+    public double calculateSalary() {
+        return getBaseSalary() + bonus;
     }
 }
 
-// Part Time Employee Class
+// Subclass: Part-Time Employee
 class PartTimeEmployee extends Employee {
-    int hoursWorked;
-    double rate;
+    private int hoursWorked;
+    private double hourlyRate;
 
-    // Constructor
-    PartTimeEmployee(String name, int id, int hoursWorked, double rate) {
-        super(name, id, 0);
+    // Constructor using super()
+    public PartTimeEmployee(String name, int id, int hoursWorked, double hourlyRate) {
+        super(name, id, 0); // baseSalary not needed
         this.hoursWorked = hoursWorked;
-        this.rate = rate;
+        this.hourlyRate = hourlyRate;
     }
 
-    // Override method
-    double calculateSalary() {
-        return hoursWorked * rate;
+    // Override calculateSalary()
+    @Override
+    public double calculateSalary() {
+        return hoursWorked * hourlyRate;
     }
 }
 
 // Main Class
-class Payroll {
-    public static void main(String args[]) {
+public class PayrollSystem {
+    public static void main(String[] args) {
 
-        // Creating objects
-        Employee e1 = new FullTimeEmployee("Rahul", 101, 40000, 5000);
-        Employee e2 = new PartTimeEmployee("Anita", 102, 60, 200);
+        // Polymorphism
+        Employee e1 = new FullTimeEmployee("Rahul", 101, 50000, 10000);
+        Employee e2 = new PartTimeEmployee("Sneha", 102, 80, 500);
 
-        System.out.println("Full Time Employee:");
-        e1.display();
+        e1.displayDetails();
+        e2.displayDetails();
 
-        System.out.println("\nPart Time Employee:");
-        e2.display();
+        // More employees
+        Employee e3 = new FullTimeEmployee("Amit", 103, 60000, 15000);
+        Employee e4 = new PartTimeEmployee("Priya", 104, 60, 400);
+
+        e3.displayDetails();
+        e4.displayDetails();
     }
 }
